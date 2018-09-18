@@ -7,6 +7,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, UserSerializerWithToken
 
+from .api import FlightsSerializer
+from .models import Flights
+from rest_framework import generics
+
+from django.db.models import Sum
+
 # Create your views here.
 @api_view(['GET'])
 def current_user(request):
@@ -32,3 +38,20 @@ class UserList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# dynamically filter database off of url
+class Filter3ViewSet(generics.ListAPIView):
+    serializer_class = FlightsSerializer
+    # queryset = Flights.objects.none()
+    
+
+    def get_queryset(self):
+        # user = self.request.user
+        tail_number = self.kwargs['tail_number']
+        # model = Flights
+        return Flights.objects.filter(tail_number=tail_number)
+        # return Flights.objects.filter(tail_number=tail_number).aggregate(Sum('pic'))
+        #return Flights.objects.all().aggregate(Sum('pic'))
+
+    # def get_context_data(self, **kwargs):

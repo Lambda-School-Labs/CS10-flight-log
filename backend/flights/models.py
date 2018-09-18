@@ -48,7 +48,7 @@ class Aircraft(models.Model):
         verbose_name_plural = "Aircraft"
 
     def __str__(self):
-        return self.name
+        return f'<{self.__class__.__name__}: {self.man_type} {self.license_type}>'
 
 # Aircraft SEL
     # Single-engine land

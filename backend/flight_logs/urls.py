@@ -14,21 +14,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework import routers
+# we probably don't need generics...
+from rest_framework import routers, generics
 from django.urls import path, include, re_path
 from rest_framework.authtoken import views
-from flights.api import FlightsViewSet, AircraftViewSet
+from flights.api import FlightsViewSet, AircraftViewSet, FilterAircraftViewSet, FilterFlightsViewSet
 from rest_framework_jwt.views import obtain_jwt_token
+
+from django.conf.urls import url
+from flights.views import Filter3ViewSet
 
 router = routers.DefaultRouter()
 router.register(r'flights', FlightsViewSet)
 router.register(r'aircraft', AircraftViewSet)
+router.register(r'filteraircraft', FilterAircraftViewSet)
+router.register(r'filterflights', FilterFlightsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     re_path(r'^api-token-auth/', views.obtain_auth_token),
     path('token-auth/', obtain_jwt_token),
-    path('flights/', include('flights.urls'))
+    path('flights/', include('flights.urls')),
+    # url endpoint to filter data dynamically
+    url('^filter3/(?P<tail_number>.+)/$', Filter3ViewSet.as_view()),
 ]
+
+urlpatterns += router.urls
