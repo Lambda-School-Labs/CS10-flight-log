@@ -127,6 +127,10 @@
  margin-bottom: 1rem;
 } */
 
+.Instructor-edit-card-name-required {
+  border: 0.12rem solid red;
+}
+
 .Instructor-edit-card .modal-body {
   /* border: 1px solid red; */
   width: 100%;

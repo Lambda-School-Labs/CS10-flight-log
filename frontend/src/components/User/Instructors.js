@@ -34,6 +34,7 @@ class Instructors extends React.Component {
       closeAll: false,
       uploadurl: '',
       loading: false,
+      nameError: false,
     };
   }
 
@@ -43,7 +44,12 @@ class Instructors extends React.Component {
     });
   };
 
-  togglePost = () => {
+  togglePost = (e) => {
+    if(this.state.name.length === 0) {
+      e.preventDefault();
+      this.setState({ nameError: true })
+      return;
+    }
     if (this.state.uploadurl === '') {
       axios({
         method: 'POST',
@@ -183,9 +189,6 @@ class Instructors extends React.Component {
           </Card>
           {this.state.instructors.map(instr => (
             <InstructorCard key={instr.id} data={instr}>
-
-              name:
-              {instr.name}
             </InstructorCard>
           ))}
         </div>
@@ -196,8 +199,9 @@ class Instructors extends React.Component {
         >
           <div className="Instructor-edit-card">
             <h4>New Instructor </h4>
+            {this.state.nameError ? <p>Please fill out the required fields</p> : null}
             <input
-              className="Instructor-edit-card-name"
+              className={this.state.nameError ? "Instructor-edit-card-name-required" : "Instructor-edit-card-name"}
               name="name"
               onChange={this.handleChange}
               placeholder="Instructor Name"

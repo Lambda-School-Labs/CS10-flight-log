@@ -40,7 +40,7 @@ class Aircrafts extends Component {
       man_type_edit: '',
       license_type_edit: 'Airplane SEL',
       uploadurl:
-        'http://res.cloudinary.com/dkzzjjjj9/image/upload/v1538078252/rurz4wt0ngzacnfz06io.jpg',
+        'https://res.cloudinary.com/dkzzjjjj9/image/upload/v1539107821/Default%20Images/defaultPlane.png',
       data: [
         {
           id: '',
@@ -121,7 +121,7 @@ class Aircrafts extends Component {
         let imgurl;
         result
           ? (imgurl = result[0].url)
-          : (imgurl = 'https://res.cloudinary.com/dkzzjjjj9/image/upload/v1538866643/u6mblomcszwbcs9ovesz.jpg');
+          : (imgurl = 'https://res.cloudinary.com/dkzzjjjj9/image/upload/v1539107821/Default%20Images/defaultPlane.png');
         this.setState({ uploadurl: imgurl });
       },
     ),
